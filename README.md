@@ -1,2 +1,2 @@
-Firebase Assignment
-Train Scheduler Homework #7
+#Train Scheduler
+Firebase Homework #7
