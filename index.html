@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Train Scheduler</title>
+    <!--Google Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Roboto&display=swap" type="text/css">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        type="text/css">
+    <!--My CSS-->
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+</head>
+
+<body>
+
+    <header>
+        <div class="card mb-3" style="max-width: 100%;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="assets/images/171218-brightline.jpg" class="card-img" alt="Image of a High Speed Train">
+                </div>
+                <div class="col-md-8 background">
+                    <div class="card-body">
+                        <h1 class="card-text text-warning" id="head-text">Anytime is Train Time</h1>
+                        
+                    </div>
+                    <nav class="nav justify-content-center">
+                        <a class="nav-link text-white active" href="#trains"><h6>Add a Train</h6></a>
+                        <a class="nav-link text-white " id="exit" href="https://plkgit.github.io/Bootstrap-Portfolio/portfolio.html"><h6>Exit</h6></a>
+                      </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="schedule">
+        <h4 class="text-center">Current Schedule</h4>
+
+        <table class="table table-hover" id="train-table">
+            <caption class="font-italic font-weight-light">Timetable</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency (min)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Minutes Away</th>
+                </tr>
+            </thead>
+            <tbody id="timetable" class="text-info">
+            </tbody>
+        </table>
+    </div>
+    <div class="container" id="add_train">
+
+        <div class="card">
+            <div class="card-header text-white">
+                Add a Train
+            </div>
+            <div class="card-body">
+                <form id="trains">
+                    <div class="form-group">
+                        <label for="name">
+                            <h6 class="font-weight-bold">Train Name</h6>
+                        </label>
+                        <input type="text" class="form-control" id="name"
+                            placeholder="Starlight Express">
+                            <span id="invalid_name"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">
+                            <h6 class="font-weight-bold">Destination</h6>
+                        </label>
+                        <input type="text" class="form-control" id="destination"
+                            placeholder="Chicago, IL">
+                            <span id="invalid_destination"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first">
+                            <h6 class="font-weight-bold">First Train Time (HH:mm - military time)</h6>
+                        </label>
+                        <input type="text" class="form-control" id="first" placeholder="12:00">
+                        <span id="invalid_first"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frequency">
+                            <h6 class="font-weight-bold">Frequency (minutes)</h6>
+                        </label>
+                        <input type="text" class="form-control" id="frequency" placeholder="30">
+                        <span id="invalid_frequency"></span>
+                    </div>
+
+                    <div>
+                    <button type="submit" id="add-train" class="btn background text-white">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h6 class="text-center">&copy; Copyright 2020 Pamela L. Kelly</h6>
+    </footer>
+
+    <!--jQuery JS file for Bootstrap-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--Bootstrap JS file-->
+    <script type="text/javascript"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <!--Moment JS file -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <!--My JS file -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+</body>
+
+</html>

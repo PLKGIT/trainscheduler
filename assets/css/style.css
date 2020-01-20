@@ -1,0 +1,70 @@
+/* CSS */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: #18223b;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Cinzel', serif;
+    padding-bottom: 3px;
+}
+
+header {
+    color: #18223b;
+    text-align: center;
+}
+
+.background {
+    background-color: #18223b;
+}
+
+#head-text{
+    padding-top: 10%;
+    text-shadow: .5px .5px white;
+}
+
+.container {
+    margin: 0 auto;
+    padding-top: .25em;
+    padding-bottom: 1em;
+}
+
+.card-header {
+    background-color: #18223b;
+    font-weight: bold;
+}
+
+#invalid_name {
+    color: red;
+    text-align: right;
+}
+
+#invalid_destination {
+    color: red;
+    text-align: right;
+}
+
+#invalid_first {
+    color: red;
+    text-align: right;
+}
+
+#invalid_frequency {
+    color: red;
+    text-align: right;
+}
+
+
+
+footer {
+    text-align: center;
+    padding-top: .5em;
+    padding-bottom: .3em;
+    background-color: #18223b;
+    color: white;
+}
