@@ -36,11 +36,36 @@ $(document).ready(function () {
     query.once("value")
         .then(function (snapshot) {
             snapshot.forEach(function (childSnapshot) {
+
+                // Pull stored train information from the database 
+
                 var trainName = childSnapshot.child("name").val();
                 var trainDestination = childSnapshot.child("destination").val();
+                var firstTrain = childSnapshot.child("first").val();
                 var trainFrequency = childSnapshot.child("frequency").val();
-                var nextArrival = childSnapshot.child("next").val();
-                var minutesAway = childSnapshot.child("away").val();
+
+                // Calculate Next Arrival and Minutes Away
+
+                var currentTime = moment();
+                // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
+
+                var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
+                // console.log("CONVERTED TIME: " + firstTrainConverted);
+
+                var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+                // console.log("DIFFERENCE IN TIME: " + diffTime);
+
+                var timeRemainder = diffTime % trainFrequency;
+                // console.log("REMAINDER: " + timeRemainder);
+
+                var minutesAway = trainFrequency - timeRemainder;
+                // console.log("MINUTES TILL TRAIN: " + minutesAway);
+
+                var nextArrival = moment(currentTime, 'HH:mm A').add(minutesAway, 'minutes').format("HH:mm A")
+                // console.log("NEXT ARRIVAL: " + nextArrival);
+
+                // Create row for results timetable
+
                 var fullList = $("<tr>").append(
                     $("<th scope='row'>").text(trainName),
                     $("<td>").text(trainDestination),
@@ -52,6 +77,64 @@ $(document).ready(function () {
                 $("#train-table > tbody").append(fullList);
             });
         });
+
+
+    // Refresh content every minute
+
+    setInterval(function(){ 
+        updateTimetable(); 
+    
+    }, 60000);
+
+    // Timetable update function
+
+    function updateTimetable (){
+
+        query.once("value")
+        .then(function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+
+                // Pull stored train information from the database 
+
+                var trainName = childSnapshot.child("name").val();
+                var trainDestination = childSnapshot.child("destination").val();
+                var firstTrain = childSnapshot.child("first").val();
+                var trainFrequency = childSnapshot.child("frequency").val();
+
+                // Calculate Next Arrival and Minutes Away
+
+                var currentTime = moment();
+                // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
+
+                var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
+                // console.log("CONVERTED TIME: " + firstTrainConverted);
+
+                var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+                // console.log("DIFFERENCE IN TIME: " + diffTime);
+
+                var timeRemainder = diffTime % trainFrequency;
+                // console.log("REMAINDER: " + timeRemainder);
+
+                var minutesAway = trainFrequency - timeRemainder;
+                // console.log("MINUTES TILL TRAIN: " + minutesAway);
+
+                var nextArrival = moment(currentTime, 'HH:mm A').add(minutesAway, 'minutes').format("HH:mm A")
+                // console.log("NEXT ARRIVAL: " + nextArrival);
+
+                // Create row for results timetable
+
+                var fullList = $("<tr>").append(
+                    $("<th scope='row'>").text(trainName),
+                    $("<td>").text(trainDestination),
+                    $("<td>").text(trainFrequency),
+                    $("<td>").text(nextArrival),
+                    $("<td>").text(minutesAway)
+                );
+                // Append the row to the existing table
+                $("#train-table > tbody").html(fullList);
+            });
+        });
+    }
 
     // Add new train Function
 
@@ -70,34 +153,13 @@ $(document).ready(function () {
         var trainFrequency = parseInt($("#frequency").val().trim());
         // console.log("--Frequency--");
         // console.log(trainFrequency);
-        var currentTime = moment();
-        // console.log("--Current Time--");
-        // console.log(moment(currentTime).format("HH:mm"));
-
-        // Calculate Next Arrival and Minutes Away
-        var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
-        // console.log("CONVERTED TIME: " + firstTrainConverted);
-
-        var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
-        console.log("DIFFERENCE IN TIME: " + diffTime);
-
-        var timeRemainder = diffTime % trainFrequency;
-        console.log("REMAINDER: " + timeRemainder);
-
-        var minutesAway = trainFrequency - timeRemainder;
-        console.log("MINUTES TILL TRAIN: " + minutesAway);
-
-        var nextArrival = moment(currentTime, 'HH:mm A').add(minutesAway, 'minutes').format("HH:mm A")
-        console.log("NEXT ARRIVAL: " + nextArrival);
 
         // Create local "temporary" object for holding train data
         var newTrain = {
             name: trainName,
             destination: trainDestination,
             first: firstTrain,
-            frequency: trainFrequency,
-            next: nextArrival,
-            away: minutesAway
+            frequency: trainFrequency
         };
 
         // Push train data from object to the database
@@ -116,26 +178,40 @@ $(document).ready(function () {
         database.ref().on("child_added", function (childSnapshot) {
             // console.log(childSnapshot.val());
 
-            // Store DB values to variables.
-            var trainName = childSnapshot.val().name;
-            var trainDestination = childSnapshot.val().destination;
-            var firstTrain = childSnapshot.val().first;
-            var firstTrainConverted = childSnapshot.val().firstconverted;
-            var trainFrequency = childSnapshot.val().frequency;
-            var nextArrival = childSnapshot.val().next;
-            var minutesAway = childSnapshot.val().away;
-
-            // Append database rows to timetable
+            // Append Train data to timetable
 
             query.once("value")
                 .then(function (snapshot) {
                     $("#timetable").empty();
                     snapshot.forEach(function (childSnapshot) {
-                        var trainName = childSnapshot.child("name").val();
-                        var trainDestination = childSnapshot.child("destination").val();
-                        var trainFrequency = childSnapshot.child("frequency").val();
-                        var nextArrival = childSnapshot.child("next").val();
-                        var minutesAway = childSnapshot.child("away").val();
+                        trainName = childSnapshot.child("name").val();
+                        trainDestination = childSnapshot.child("destination").val();
+                        trainFrequency = childSnapshot.child("frequency").val();
+
+
+
+                        // Calculate Next Arrival and Minutes Away
+
+                        var currentTime = moment();
+                        // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
+
+                        var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
+                        // console.log("CONVERTED TIME: " + firstTrainConverted);
+
+                        var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+                        // console.log("DIFFERENCE IN TIME: " + diffTime);
+
+                        var timeRemainder = diffTime % trainFrequency;
+                        // console.log("REMAINDER: " + timeRemainder);
+
+                        var minutesAway = trainFrequency - timeRemainder;
+                        // console.log("MINUTES TILL TRAIN: " + minutesAway);
+
+                        var nextArrival = moment(currentTime, 'HH:mm A').add(minutesAway, 'minutes').format("HH:mm A")
+                        // console.log("NEXT ARRIVAL: " + nextArrival);
+
+                        // Create row for results timetable
+
                         var newRow = $("<tr>").append(
                             $("<th scope='row'>").text(trainName),
                             $("<td>").text(trainDestination),
@@ -143,7 +219,7 @@ $(document).ready(function () {
                             $("<td>").text(nextArrival),
                             $("<td>").text(minutesAway)
                         );
-                        // Append the rows to the  table
+                        // Write train timetable data to the DOM
 
                         $("#timetable").append(newRow);
                     });
