@@ -1,5 +1,5 @@
-# Firebase Assignment - Train Scheduler
-JavaScript Homework #7
+# Firebase: Train Scheduler
+Homework #7
 
 
 ## Overview
@@ -57,5 +57,3 @@ https://plkgit.github.io/Bootstrap-Portfolio/portfolio.html
 
 
 Copyright &copy; 2020 Pamela L. Kelly
-
-

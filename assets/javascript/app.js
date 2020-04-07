@@ -38,34 +38,25 @@ $(document).ready(function () {
             snapshot.forEach(function (childSnapshot) {
 
                 // Pull stored train information from the database 
-
                 var trainName = childSnapshot.child("name").val();
                 var trainDestination = childSnapshot.child("destination").val();
                 var firstTrain = childSnapshot.child("first").val();
                 var trainFrequency = childSnapshot.child("frequency").val();
 
                 // Calculate Next Arrival and Minutes Away
-
                 var currentTime = moment();
                 // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
-
                 var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
                 // console.log("CONVERTED TIME: " + firstTrainConverted);
-
                 var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
                 // console.log("DIFFERENCE IN TIME: " + diffTime);
-
                 var timeRemainder = diffTime % trainFrequency;
                 // console.log("REMAINDER: " + timeRemainder);
-
                 var minutesAway = trainFrequency - timeRemainder;
                 // console.log("MINUTES TILL TRAIN: " + minutesAway);
-
                 var nextArrival = moment(currentTime, 'HH:mm A').add(minutesAway, 'minutes').format("HH:mm A")
                 // console.log("NEXT ARRIVAL: " + nextArrival);
-
                 // Create row for results timetable
-
                 var fullList = $("<tr>").append(
                     $("<th scope='row'>").text(trainName),
                     $("<td>").text(trainDestination),
