@@ -6,14 +6,13 @@ Train schedule application that incorporates Firebase to host arrival and depart
 ![](https://res.cloudinary.com/damplk/image/upload/v1580628277/portal/hw_scheduler_n0xfuy.png)
 
 ## Using Train Scheduler
-* Navigate to the website
 * Complete the following information on the form provided:
   * Train Name
   * Destination
   * First arrival time
   * Arrival frequency
 * Submit the form to add the train to the scheduler database
-* The Train Schedule at the top of the page displays the following for each train in the database:
+* The timetable at the top of the page displays the following for each train:
   * Train Name
   * Destination
   * Frequency (in minutes)
