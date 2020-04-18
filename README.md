@@ -3,7 +3,7 @@
 ## Overview
 Train schedule application that incorporates Firebase to host arrival and departure data. The app provides up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station.
 
-![](https://res.cloudinary.com/damplk/image/upload/v1580797529/portal/portfolio_02_dcmeu6.png)
+![](https://res.cloudinary.com/damplk/image/upload/v1580628277/portal/hw_scheduler_n0xfuy.png)
 
 ## Using Train Scheduler
 * Navigate to the website
